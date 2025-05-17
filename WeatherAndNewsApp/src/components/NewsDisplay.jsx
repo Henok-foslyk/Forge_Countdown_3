@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Card, CardMedia, CardContent, Typography, Button } from '@mui/material';
-import "../styles/newsCard.css";
+
 
 const NewsDisplay = () => {
   const [news, setNewsData] = useState([]);

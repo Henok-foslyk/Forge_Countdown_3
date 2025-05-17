@@ -4,7 +4,8 @@ import HourlyWeather from './HourlyWeather';
 import CurrentWeather from './CurrentWeather';
 import DailyWeather from './DailyWeather';
 import CurrentLocation from './CurrentLocation';
-import Button from "@mui/material/Button"
+import {Typography, Button, Box, TextField} from '@mui/material';
+
 
 
 const WeatherDisplay = () => {
@@ -34,11 +35,73 @@ const WeatherDisplay = () => {
         });
     };
 
+    return (
+      <Box sx={{ padding: 3, maxWidth: 1500, margin: 'auto', alignItems: 'center' }}>
+        <Typography variant="h4" gutterBottom>
+          Weather
+        </Typography>
     
-
+        <CurrentLocation />
+    
+        <Box sx={{ my: 2 }}>
+          <input
+            type="text"
+            placeholder="Enter city address like: London, England"
+            value={locationInput}
+            onChange={(e) => setLocationInput(e.target.value)}
+            style={{ padding: '0.5rem', width: '100%', maxWidth: 400 }}
+          />
+        </Box>
+    
+        <Button onClick={fetchLocation} variant="contained" sx={{ mb: 3 }}>
+          Get Coordinate
+        </Button>
+    
+        {locationRetrieved ? (
+          <>
+            <Box sx={{ mb: 2 }}>
+              <Typography variant="h6" gutterBottom>
+                Location Info
+              </Typography>
+              <Typography>
+                {location.name}, {location.state}, {location.country} — Lat: {location.lat} — Lon: {location.lon}
+              </Typography>
+            </Box>
+    
+            <Box sx={{ mb: 4 }}>
+              <Typography variant="h6" gutterBottom>
+                Current Weather
+              </Typography>
+              <CurrentWeather lat={coords[0]} lon={coords[1]} />
+            </Box>
+    
+            <Box sx={{ mb: 4 }}>
+              <Typography variant="h6" gutterBottom>
+                Hourly Forecast for 5 hours Tomorrow
+              </Typography>
+              <HourlyWeather lat={coords[0]} lon={coords[1]} />
+            </Box>
+    
+            <Box sx={{ mb: 4 }}>
+              <Typography variant="h6" gutterBottom>
+                Daily Forecast for the Next 7 Days
+              </Typography>
+              <DailyWeather lat={coords[0]} lon={coords[1]} />
+            </Box>
+          </>
+        ) : (
+          <Typography variant="body1">Awaiting Location Retrieval</Typography>
+        )}
+      </Box>
+    );
+    
+  };
+    /*
     return (
       <div>
-        <h2> Weather </h2>
+        <Typography variant="h4" gutterBottom>
+          Weather
+        </Typography>
         <CurrentLocation/>
         <br />
         <input
@@ -72,6 +135,7 @@ const WeatherDisplay = () => {
         </div>
       </div>
     )
-}
+}*/
+
 
 export default WeatherDisplay
